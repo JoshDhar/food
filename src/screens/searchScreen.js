@@ -23,7 +23,7 @@ const searchScreen = () => {
       {errorMessage ? (
         <Text style={styles.resultStyle}>{errorMessage}</Text>
       ) : null}
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <ResultsPanel
           title="Cost Effective"
           results={filterResultsByPrice("$")}

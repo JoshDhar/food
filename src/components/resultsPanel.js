@@ -1,8 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import ResultsDetail from "./resultsDetail";
+import { withNavigation } from "react-navigation";
 
-const ResultsPanel = ({ title, results }) => {
+const ResultsPanel = ({ title, results, navigation }) => {
+  if (!results.length) {
+    return null;
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.titleStyle}>{title}</Text>
@@ -12,7 +17,15 @@ const ResultsPanel = ({ title, results }) => {
         data={results}
         keyExtractor={(result) => result.id}
         renderItem={({ item }) => {
-          return <ResultsDetail result={item} />;
+          return (
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("SingleResult", { id: item.id })
+              }
+            >
+              <ResultsDetail result={item} />
+            </TouchableOpacity>
+          );
         }}
       />
     </View>
@@ -31,4 +44,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ResultsPanel;
+export default withNavigation(ResultsPanel);
